@@ -11,7 +11,7 @@ enum HandResult {
 }
 
 impl HandResult {
-    pub fn score(&self) -> Res {
+    pub fn score(self) -> Res {
         match self {
             HandResult::Win => 6,
             HandResult::Draw => 3,
@@ -47,7 +47,7 @@ impl From<&str> for Hand {
 }
 
 impl Hand {
-    pub fn score(&self) -> Res {
+    pub fn score(self) -> Res {
         match self {
             Hand::Rock => 1,
             Hand::Paper => 2,
@@ -55,7 +55,7 @@ impl Hand {
         }
     }
 
-    pub fn against(&self, other: Hand) -> HandResult {
+    pub fn against(self, other: Hand) -> HandResult {
         match self {
             Hand::Rock => match other {
                 Hand::Rock => HandResult::Draw,
@@ -75,14 +75,14 @@ impl Hand {
         }
     }
 
-    pub fn opponents_hand(&self, opponents_result: HandResult) -> Hand {
+    pub fn opponents_hand(self, opponents_result: HandResult) -> Hand {
         match opponents_result {
             HandResult::Loss => match self {
                 Hand::Rock => Hand::Scissors,
                 Hand::Paper => Hand::Rock,
                 Hand::Scissors => Hand::Paper,
             },
-            HandResult::Draw => *self,
+            HandResult::Draw => self,
             HandResult::Win => match self {
                 Hand::Rock => Hand::Paper,
                 Hand::Paper => Hand::Scissors,

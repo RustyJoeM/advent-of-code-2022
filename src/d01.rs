@@ -20,7 +20,7 @@ fn solve_part1(data: &[Vec<u32>]) -> Res {
 
 fn solve_part2(data: &[Vec<u32>]) -> Res {
     let mut v: Vec<u32> = data.iter().map(|v| v.iter().sum()).collect();
-    v.sort();
+    v.sort_unstable();
     v.iter().rev().take(3).sum()
 }
 
