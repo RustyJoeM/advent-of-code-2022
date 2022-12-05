@@ -54,7 +54,7 @@ fn parse_input(data: &str) -> (Towers, Vec<Move>) {
         }
     }
 
-    for tower in towers.iter_mut() {
+    for tower in &mut towers {
         tower.reverse();
     }
 
