@@ -11,7 +11,7 @@ edition = "2021"
 # bitvec = "0.22.3"
 #itertools = "0.10.3"
 #anyhow = "1.0.51"
-#regex = "1.5.4"
+# regex = "1.6.0"
 # num = "0.4.0"
 
 [[bin]]
@@ -29,3 +29,7 @@ path = "src/d03.rs"
 [[bin]]
 name = "d04"
 path = "src/d04.rs"
+
+[[bin]]
+name = "d05"
+path = "src/d05.rs"
