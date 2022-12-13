@@ -6,7 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# nom = "7"
+# rayon = "1.6.0"
+nom = "7.1.1"
 # nom_locate = "4"
 # bitvec = "0.22.3"
 #itertools = "0.10.3"
@@ -61,3 +62,7 @@ path = "src/d11.rs"
 [[bin]]
 name = "d12"
 path = "src/d12.rs"
+
+[[bin]]
+name = "d13"
+path = "src/d13.rs"
