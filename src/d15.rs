@@ -94,10 +94,6 @@ fn solve_part2(data: &[(Coords, Coords)]) -> Coord {
     unreachable!();
 }
 
-#[cfg(not(test))]
 generate_main!();
-
-#[cfg(test)]
-generate_main_sample!();
 
 generate_tests!(26, 56_000_011);
