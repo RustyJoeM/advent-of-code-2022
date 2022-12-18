@@ -1,3 +1,4 @@
+#![warn(clippy::pedantic)]
 mod utils;
 const DAY_ID: utils::DayIdType = 5;
 
@@ -27,6 +28,15 @@ impl Towers {
         let split_index = self.towers[m.from_index - 1].len() - m.count;
         let mut carry = self.towers[m.from_index - 1].split_off(split_index);
         self.towers[m.to_index - 1].append(&mut carry);
+        // let mut carry = vec![];
+        // for _ in 0..m.count {
+        //     let letter = self.towers[m.from_index - 1].pop().unwrap();
+        //     carry.push(letter);
+        // }
+        // for _ in 0..m.count {
+        //     let letter = carry.pop().unwrap();
+        //     self.towers[m.to_index - 1].push(letter);
+        // }
     }
 
     pub fn top_crates(&self) -> String {
@@ -58,6 +68,8 @@ fn parse_input(data: &str) -> (Towers, Vec<Move>) {
         tower.reverse();
     }
 
+    // let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
+
     let moves = moves_text
         .lines()
         .map(|line| {
@@ -67,6 +79,10 @@ fn parse_input(data: &str) -> (Towers, Vec<Move>) {
                 .step_by(2)
                 .map(|x| x.parse::<usize>().unwrap())
                 .collect();
+            // let cap = re.captures_iter(line).next().unwrap();
+            // let count = cap[1].parse::<usize>().unwrap();
+            // let from_index = cap[2].parse::<usize>().unwrap();
+            // let to_index = cap[3].parse::<usize>().unwrap();
             Move {
                 count: values[0],
                 from_index: values[1],

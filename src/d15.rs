@@ -34,9 +34,9 @@ fn coord_dist(x: Coord, y: Coord) -> Coord {
 
 fn solve_part1(data: &[(Coords, Coords)]) -> usize {
     #[cfg(test)]
-    const ROW_OF_INTEREST: i64 = 10;
+    const ROW_OF_INTEREST: Coord = 10;
     #[cfg(not(test))]
-    const ROW_OF_INTEREST: i64 = 2_000_000;
+    const ROW_OF_INTEREST: Coord = 2_000_000;
 
     let mut intervals: Vec<(Coord, Coord)> = vec![];
 

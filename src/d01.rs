@@ -1,3 +1,4 @@
+#![warn(clippy::pedantic)]
 mod utils;
 const DAY_ID: utils::DayIdType = 1;
 

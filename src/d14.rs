@@ -61,6 +61,9 @@ fn solve_part1(paths: &[Path]) -> usize {
     }
 
     let mut blocks = init_blocks(paths);
+
+    let init_blocks = blocks.clone();
+
     let stone_blocks = blocks.len();
 
     let mut falling_sand = (500, 0);
@@ -90,6 +93,8 @@ fn solve_part1(paths: &[Path]) -> usize {
 
         falling_sand = (500, 0);
     }
+
+    print_blocks(paths, &init_blocks, &blocks);
 
     blocks.len() - stone_blocks
 }

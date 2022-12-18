@@ -78,3 +78,33 @@ macro_rules! generate_tests {
         }
     };
 }
+
+// #[derive(Debug, Clone)]
+// pub struct RectVec<T: Copy> {
+//     pub rows: usize,
+//     pub cols: usize,
+//     pub vec: Vec<T>,
+// }
+
+// impl<T: Copy> RectVec<T> {
+//     pub fn new(rows: usize, cols: usize, init_value: T) -> Self {
+//         Self {
+//             rows,
+//             cols,
+//             vec: vec![init_value; rows * cols],
+//         }
+//     }
+
+//     fn index_of(&self, row: usize, col: usize) -> usize {
+//         row * self.cols + col
+//     }
+
+//     pub fn get(&self, row: usize, col: usize) -> T {
+//         self.vec[self.index_of(row, col)]
+//     }
+
+//     pub fn set(&mut self, row: usize, col: usize, value: T) {
+//         let index = self.index_of(row, col);
+//         self.vec[index] = value;
+//     }
+// }
