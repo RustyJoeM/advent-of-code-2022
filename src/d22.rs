@@ -7,7 +7,7 @@ type Clockwise = bool;
 type Coord = usize;
 type Coords = (Coord, Coord);
 type Spots = HashMap<Coords, char>;
-type Path = Vec<(Coord, Clockwise)>;
+type Path = Vec<Action>;
 
 #[derive(Debug)]
 struct Board {
@@ -16,6 +16,25 @@ struct Board {
 
     row_wraps: Vec<(Coord, Coord)>,
     col_wraps: Vec<(Coord, Coord)>,
+}
+
+#[derive(Debug, Copy, Clone)]
+enum Action {
+    Move(usize),
+    RotateLeft,
+    RotateRight,
+}
+
+impl From<&str> for Action {
+    fn from(s: &str) -> Self {
+        if s == "L" {
+            Self::RotateLeft
+        } else if s == "R" {
+            Self::RotateRight
+        } else {
+            Self::Move(s.parse().unwrap())
+        }
+    }
 }
 
 fn parse_input(data: &str) -> (Board, Path) {
@@ -35,12 +54,7 @@ fn parse_input(data: &str) -> (Board, Path) {
 
     let spaced_line = path_line.replace('L', " L ").replace('R', " R ");
     let words = spaced_line.split_ascii_whitespace().collect::<Vec<_>>();
-    let mut path = vec![];
-    for i in 0..words.len() / 2 {
-        let steps = words[2 * i].parse().unwrap();
-        let clockwise = words[2 * i + 1] == "R";
-        path.push((steps, clockwise));
-    }
+    let path = words.iter().copied().map(Into::into).collect();
 
     let mut top_left = (0, 0);
     for (index, ch) in data.lines().next().unwrap().chars().enumerate() {
@@ -313,18 +327,22 @@ fn traverse_map(board: &Board, path: &Path, cube_wrap: bool) -> usize {
     let mut coords = board.top_left;
     let mut direction = Direction::Right;
 
-    for &(steps, clockwise) in path.iter() {
+    for action in path.iter() {
+        match action {
+            Action::Move(steps) => {
+                (coords, direction) = board.walk(coords, *steps, direction, cube_wrap);
+            }
+            Action::RotateLeft => direction = direction.rotate(false),
+            Action::RotateRight => direction = direction.rotate(true),
+        }
         // println!(
         //     "Move from ({row},{col}) {steps} steps \"{direction:?}\", then turn {}",
         //     if clockwise { "RIGHT" } else { "LEFT" }
         // );
-        (coords, direction) = board.walk(coords, steps, direction, cube_wrap);
         // println!("\tended at ({row},{col}) ({direction:?})");
-        direction = direction.rotate(clockwise);
     }
 
     let (row, col) = coords;
-    // println!("{},{},{}", row + 1, col + 1, direction.facing_score());
     1000 * (row + 1) + 4 * (col + 1) + direction.facing_score()
 }
 
