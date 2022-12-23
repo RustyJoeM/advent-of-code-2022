@@ -88,7 +88,7 @@ impl Elves {
 
     pub fn scatter(&mut self) -> usize {
         let mut intents = HashMap::<Coords, usize>::new();
-        let mut want_to_move = HashMap::<Coords, Vec<Coords>>::new();
+        let mut want_to_move = HashMap::<Coords, Coords>::new();
 
         for elf in &self.elves {
             let neighbors = self.neighbors_of(*elf);
@@ -100,24 +100,22 @@ impl Elves {
                     let target = (elf.0 + dy, elf.1 + dx);
                     // println!("{elf:?} could move to ({target:?})");
                     *intents.entry(target).or_insert(0) += 1;
-                    want_to_move.entry(*elf).or_default().push(target);
+                    want_to_move.insert(*elf, target);
                     break;
                 }
             }
         }
 
         let mut elves_moved = 0;
-        for (coords, targets) in want_to_move {
-            'targets: for target in &targets {
-                if let Some(count) = intents.get(target) {
-                    if count > &1 {
-                        continue 'targets;
-                    }
+        for (from, target) in want_to_move {
+            if let Some(count) = intents.get(&target) {
+                if count > &1 {
+                    continue;
+                } else {
+                    self.elves.remove(&from);
+                    self.elves.insert(target);
+                    elves_moved += 1;
                 }
-                self.elves.remove(&coords);
-                self.elves.insert(*target);
-                elves_moved += 1;
-                break 'targets;
             }
         }
 
